@@ -4,7 +4,7 @@ General workflow, assembly SRA-NCBI-id_samples included in text list
 
 //import modules
 include {fastp}             from  "../modules/clean_reads"
-include {fasterqdump}       from  "../modules/enadlwd"	 addParams(temp_folder="/scratch")
+include {enadataget}       from  "../modules/enadwld"
 include {megahit_assembly}  from  "../modules/assembly"
 
 //run metagenomic assembly pipeline using megahit

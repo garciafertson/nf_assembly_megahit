@@ -2,7 +2,7 @@
 
 params{
   threads=1
-  output_assemblies="megahit_assemblies"
+  outdir="megahit_assemblies"
   //ncbi_sample_id="./hgm_to_assemble.test.tsv"
   //ncbi_proj_id="define in standard input"
   //ini.file=  //define software running options in inifile
