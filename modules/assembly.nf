@@ -4,7 +4,7 @@ process megahit_assembly{
   publishDir "test_nf_assemblies",
     mode: 'copy',
     overwrite: false
-  cpus "10"
+  cpus 10
   time "10h"
 
   input:
@@ -14,14 +14,14 @@ process megahit_assembly{
     tuple val(x), path("megahit_out/${x}.contigs.fa") , emit:assembly
 
   script:
-  def mem_mh = task.memory.toBytes()
+  //def mem_mh = task.memory.toBytes()
     """
     megahit \\
     -1 ${reads[0]} \\
     -2 ${reads[1]} \\
-    -t "${task.cpus}" \\
-    -m $mem_mh \\
+    -t ${task.cpus} \\
     -o megahit_out \\
-    --out-prefix ${x}
+    --out-prefix ${x} \\
+    --min-contig-len 2000
     """
 }

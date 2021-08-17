@@ -3,7 +3,7 @@ process fastp{
   //memory '6GB'
   cpus '1'
   time '4h'
-  module 'bioinfo-tools, fastp'
+  module 'bioinfo-tools:fastp'
   input:
     tuple val(x), path(reads)
   output:

@@ -4,7 +4,7 @@ General workflow, assembly SRA-NCBI-id_samples included in text list
 
 //import modules
 include {fastp}             from  "../modules/clean_reads"
-include {fasterqdump}       from  "../modules/enadlwd"	 addParams(temp_folder="/scratch")
+include {enadataget}       from  "../modules/enadwld"	 
 include {megahit_assembly}  from  "../modules/assembly"
 
 //run metagenomic assembly pipeline using megahit
@@ -12,7 +12,7 @@ include {megahit_assembly}  from  "../modules/assembly"
 workflow ASSEMBLY {
         ncbi_sampleid = file(params.sample_id)
         sra_sample_list = ncbi_sampleid.readLines()
-        sampleid=Channel.fromList(sra_sample_listq)
+        sampleid=Channel.fromList(sra_sample_list)
         enadataget(sampleid)
         fastq_sample=enadataget.out.reads
         fastp(fastq_sample)
