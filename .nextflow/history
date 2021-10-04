@@ -1,0 +1,1 @@
+2021-10-04 20:30:45	-	hopeful_volta	-	1fc6a5870f9d5961d0ace7afb0345ac4	12d83c76-765f-475a-a60c-070ee2b8e477	nextflow run /home/jfgarcia/repositories/nf_assembly_megahit/ -with-tower -c /home/jfgarcia/repositories/nf_assembly_megahit/configs/uppmax.config --project snic2021-5-248 --input 'FMT_fqsamples/*{1,2}.fastq.gz' -resume -bg

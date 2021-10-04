@@ -7,14 +7,14 @@ process fastp{
   input:
     tuple val(x), path(reads)
   output:
-    tuple val(x), path("${x}.R{1,2}.trim.fq.gz"), emit: reads
+    tuple val(x), path("${x.id}.R{1,2}.trim.fq.gz"), emit: reads
   script:
 
     """
     fastp --in1 ${reads[0]} \\
           --in2 ${reads[1]} \\
-          --out1 "${x}.R1.trim.fq.gz" \\
-          --out2 "${x}.R2.trim.fq.gz" \\
+          --out1 "${x.id}.R1.trim.fq.gz" \\
+          --out2 "${x.id}.R2.trim.fq.gz" \\
           --thread 1
     """
 }

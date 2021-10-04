@@ -1,7 +1,7 @@
 process megahit_assembly{
 
   module "bioinfo-tools: megahit"
-  publishDir "test_nf_assemblies",
+  publishDir "assemblies",
     mode: 'copy',
     overwrite: false
   cpus 10
@@ -11,7 +11,7 @@ process megahit_assembly{
     tuple val(x) ,path(reads)
 
   output:
-    tuple val(x), path("megahit_out/${x}.contigs.fa") , emit:assembly
+    tuple val(x), path("megahit_out/${x.id}.contigs.fa") , emit:assembly
 
   script:
   //def mem_mh = task.memory.toBytes()
@@ -21,7 +21,7 @@ process megahit_assembly{
     -2 ${reads[1]} \\
     -t ${task.cpus} \\
     -o megahit_out \\
-    --out-prefix ${x} \\
+    --out-prefix ${x.id} \\
     --min-contig-len 2000
     """
 }
