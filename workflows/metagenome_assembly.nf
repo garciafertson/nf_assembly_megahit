@@ -4,13 +4,13 @@ General workflow, assembly SRA-NCBI-id_samples included in text list
 
 //import modules
 include {fastp}             from  "../modules/clean_reads"
-include {enadataget}       from  "../modules/enadwld"	 
+include {enadataget}       from  "../modules/enadwld"
 include {megahit_assembly}  from  "../modules/assembly"
 
 //run metagenomic assembly pipeline using megahit
 
 workflow ASSEMBLY {
-  if (!params.assembly_from_ENA){ 
+  if (!params.assembly_from_ENA){
      Channel
         .fromFilePairs(params.input, size: params.single_end ? 1 : 2)
         .ifEmpty { exit 1, "Cannot find any reads matching: ${params.input}\nNB: Path needs to be enclosed in quotes!\nIf this is single-end data, please specify --single_end on the command line." }
@@ -32,7 +32,9 @@ workflow ASSEMBLY {
      ch_raw_short_reads=enadataget.out.reads
      }
 
-     fastp(ch_raw_short_reads)     
+     fastp(ch_raw_short_reads)
+
      fastq_trimmed=fastp.out.reads
+     
      megahit_assembly(fastq_trimmed)
      }
