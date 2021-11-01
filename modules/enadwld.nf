@@ -8,7 +8,7 @@ process enadataget{
   time '4h'
   module 'conda'
   maxForks=5
-  maxeRetries 3
+  maxRetries 3
 
   input:
     val x
