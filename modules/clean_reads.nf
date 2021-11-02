@@ -12,9 +12,9 @@ process fastp{
 
   if(x.single_end) {
     """
-    --in1 ${reads} \\
-    --out ${x.id}.R1.trim.fq.gz  \\
-    --thread 1
+    fastp -i ${reads} \\
+          -o ${x.id}.R1.trim.fq.gz  \\
+          --thread 1
     """
 
   }else {

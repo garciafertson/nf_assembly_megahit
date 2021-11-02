@@ -1,5 +1,5 @@
 process megahit_assembly{
-
+  scratch true
   module "bioinfo-tools: megahit"
   publishDir "assemblies",
     mode: 'copy',
@@ -21,8 +21,8 @@ process megahit_assembly{
     -r ${reads}     \\
     -t ${task.cpus} \\
     -o megahit_out  \\
-    --out-prefix $${x.id} \\
-    --min_contig-len 1500
+    --out-prefix ${x.id} \\
+    --min-contig-len 1500
     """
 
   }else{
@@ -36,4 +36,5 @@ process megahit_assembly{
     --out-prefix ${x.id} \\
     --min-contig-len 2000
     """
+}
 }
