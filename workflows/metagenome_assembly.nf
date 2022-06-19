@@ -6,7 +6,7 @@ General workflow, assembly SRA-NCBI-id_samples included in text list
 include {fastp}             from  "../modules/clean_reads"
 include {enadataget}       from  "../modules/enadwld"
 include {megahit_assembly}  from  "../modules/assembly"
-
+include {ion_assembly} from  "../modules/assembly"
 //run metagenomic assembly pipeline using megahit
 
 workflow ASSEMBLY {
@@ -32,9 +32,12 @@ workflow ASSEMBLY {
      ch_raw_short_reads=enadataget.out.reads
      }
 
-     fastp(ch_raw_short_reads)
+  fastp(ch_raw_short_reads)
+  fastq_trimmed=fastp.out.reads
 
-     fastq_trimmed=fastp.out.reads
-     
-     megahit_assembly(fastq_trimmed)
-     }
+  if (!params.iontorrent){   
+    megahit_assembly(fastq_trimmed)
+  } else {
+    ion_assembly(fastq_trimmed)
+  }
+}

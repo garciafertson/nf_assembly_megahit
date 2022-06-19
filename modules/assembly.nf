@@ -1,7 +1,7 @@
-process megahit_assembly{
+process megahit_assembly {
   scratch true
   module "bioinfo-tools: megahit"
-  publishDir "assemblies",
+  publishDir params.outdir,
     mode: 'copy',
     overwrite: false
   cpus 10
@@ -36,5 +36,43 @@ process megahit_assembly{
     --out-prefix ${x.id} \\
     --min-contig-len 2000
     """
+  }
 }
+
+
+process ion_assembly {
+  scratch true
+  module  "bioinfo-tools: spades"
+  publishDir params.outdir,
+    mode: 'copy',
+    overwrite: false
+  cpus 10
+  time "10h"
+  errorStrategy "ignore"
+  
+   input:
+    tuple val(x), path(reads)
+  output:
+    tuple val(x), path("spades_out/${x.id}.contigs.fasta"), emit:assembly
+
+  script:
+  if(x.single_end){
+    """
+    spades.py --iontorrent    \\
+              -s ${reads}     \\
+              -t ${task.cpus} \\
+              -o spades_out
+    mv spades_out/contigs.fasta spades_out/${x.id}.contigs.fasta
+    """
+  }else{
+    """
+    metaspades.py --iontorrent   \\
+                  -1 ${reads[0]}  \\
+                  -2 ${reads[1]}  \\
+                  -t ${task.cpus} \\
+                  -o spades_out
+
+    mv spades_out/contigs.fasta spades_out/${x.id}.contigs.fasta
+    """ 
+  }
 }

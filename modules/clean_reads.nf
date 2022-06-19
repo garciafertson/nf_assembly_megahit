@@ -1,8 +1,8 @@
 process fastp{
-  scratch true
+  //scratch true
   //memory '6GB'
   cpus '1'
-  time '4h'
+  time '10h'
   module 'bioinfo-tools:fastp'
   input:
     tuple val(x), path(reads)
@@ -27,3 +27,4 @@ process fastp{
     """
   }
 }
+
